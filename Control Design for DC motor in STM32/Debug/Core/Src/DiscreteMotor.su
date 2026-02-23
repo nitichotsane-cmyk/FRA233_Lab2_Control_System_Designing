@@ -1,0 +1,5 @@
+../Core/Src/DiscreteMotor.cpp:4:1:DiscreteMotor::DiscreteMotor(float, float, float, float, float, float, float)	72	static
+../Core/Src/DiscreteMotor.cpp:34:6:void DiscreteMotor::resetStates()	16	static
+../Core/Src/DiscreteMotor.cpp:43:7:float DiscreteMotor::updateForward(float)	24	static
+../Core/Src/DiscreteMotor.cpp:50:7:float DiscreteMotor::updateBackward(float)	24	static
+../Core/Src/DiscreteMotor.cpp:57:7:float DiscreteMotor::updateTustin(float)	24	static
