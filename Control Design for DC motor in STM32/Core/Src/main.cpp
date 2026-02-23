@@ -25,11 +25,11 @@
 /* USER CODE BEGIN Includes */
 #include "DiscreteMotor.h"
 
-#define PARAM_n   1.0f     // Gear ratio
-#define PARAM_Ke  0.05084f    // Back EMF constant (V/(rad/s))
-#define PARAM_J   9.5902f*0.000001   // Rotor inertia (kg.m^2)
-#define PARAM_L   0.03622f     // Armature inductance (H)
-#define PARAM_b   4.223f*0.00000001    // Viscous friction (N.m.s)
+#define PARAM_n   0.9994f     // Gear ratio
+#define PARAM_Ke  0.05072f    // Back EMF constant (V/(rad/s))
+#define PARAM_J   0.000011211   // Rotor inertia (kg.m^2)
+#define PARAM_L   0.00003622f     // Armature inductance (H)
+#define PARAM_b   0.000031521    // Viscous friction (N.m.s)
 #define PARAM_Rm  2.97f     // Armature resistance (Ohms)
 #define TS        0.001f   // Sampling time 1 ms
 
@@ -55,7 +55,7 @@
 /* USER CODE BEGIN PV */
 uint32_t testing = 0;
 
-volatile float current_voltage = 5.0f; // สมมติว่าป้อนไฟ 5V
+volatile float current_voltage = 12.0f; // สมมติว่าป้อนไฟ 5V
 volatile float motor_speed = 0.0f;
 
 DiscreteMotor motorModel(PARAM_n, PARAM_Ke, PARAM_J, PARAM_L, PARAM_b, PARAM_Rm, TS);
