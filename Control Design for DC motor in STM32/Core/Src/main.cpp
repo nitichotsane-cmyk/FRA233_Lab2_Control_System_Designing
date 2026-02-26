@@ -29,10 +29,12 @@
 #define PARAM_Ke  0.05072f    // Back EMF constant (V/(rad/s))
 #define PARAM_J   0.000011211   // Rotor inertia (kg.m^2)
 #define PARAM_L   0.00003622f     // Armature inductance (H)
-#define PARAM_b   0.000031521    // Viscous friction (N.m.s)
-#define PARAM_Rm  2.97f     // Armature resistance (Ohms)
-#define TS        0.001f   // Sampling time 1 ms
+#define PARAM_b   0.0000327239    // Viscous friction (N.m.s)
+#define PARAM_Rm  3.74f     // Armature resistance (Ohms)
+#define TS        0.00001f   // Sampling time 1 ms
 
+#include <cmath>
+#include <iostream>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,6 +59,12 @@ uint32_t testing = 0;
 
 volatile float current_voltage = 12.0f; // สมมติว่าป้อนไฟ 5V
 volatile float motor_speed = 0.0f;
+//volatile float motor_speed_Forward = 0.0f;
+//volatile float motor_speed_Backward = 0.0f;
+
+volatile float count = 0.0;
+volatile float t = 0.0;
+float v_in = 0;
 
 DiscreteMotor motorModel(PARAM_n, PARAM_Ke, PARAM_J, PARAM_L, PARAM_b, PARAM_Rm, TS);
 
@@ -65,7 +73,9 @@ DiscreteMotor motorModel(PARAM_n, PARAM_Ke, PARAM_J, PARAM_L, PARAM_b, PARAM_Rm,
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+double sineFunc(float a,float t,float f);
+double rampFunc(float slope, float t, float start_time);
+float pulseTrainFunc(float amplitude, float t, float start_time, float period, float duty_cycle, int num_pulses);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -170,9 +180,63 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
  {
 	if (htim == &htim2) {
-		float v_in = current_voltage;
+		t = count/100000;
+//		v_in = sineFunc(12, t, 1);
+		v_in = rampFunc(1,t,1);
+//		v_in = pulseTrainFunc(12, t, 1, 2, 0.5, 10);
 		motor_speed = motorModel.updateTustin(v_in);
+//		motor_speed = motorModel.updateForward(v_in);
+//		motor_speed = motorModel.updateBackward(v_in);
+//		int i = 1;
+//		std::cout << "%d" << 1 << "!" << "\n";
+//		printf("%d",i);
+		count++;
 	}
+}
+
+double sineFunc(float a,float t,float f){
+	return a*sin(2*(22/7)*f*t);
+}
+
+double rampFunc(float slope, float t, float start_time) {
+	double output = slope * (t - start_time);
+    if (t >= start_time && output <= 12) {
+        return output;
+    } else {
+        return 0.0f;
+    }
+}
+
+float pulseTrainFunc(float amplitude, float t, float start_time, float period, float duty_cycle, int num_pulses) {
+    if (t < start_time) {
+        return 0.0f; // ยังไม่ถึงเวลาเริ่มต้น
+    }
+
+    float t_active = t - start_time;
+    int current_pulse = (int)(t_active / period); // คำนวณว่าตอนนี้อยู่ลูกคลื่นที่เท่าไหร่
+
+    // ถ้าจ่ายคลื่นครบจำนวนลูกที่กำหนดแล้ว ให้หยุดจ่าย (กลับเป็น 0)
+    if (current_pulse >= num_pulses) {
+        return 0.0f;
+    }
+
+    // คำนวณเวลาที่อยู่ในลูกคลื่นปัจจุบัน
+    float t_in_period = t_active - (current_pulse * period);
+
+    // จ่าย High ตามสัดส่วน Duty Cycle (เช่น 0.5 คือ High ครึ่งนึง Low ครึ่งนึง)
+    if (t_in_period < (period * duty_cycle)) {
+        return amplitude;
+    } else {
+        return 0.0f;
+    }
+}
+
+int _write(int file, char *ptr, int len) {
+	int i;
+	for (i = 0; i < len; i++) {
+		ITM_SendChar(*ptr++);
+	}
+	return len;
 }
 /* USER CODE END 4 */
 
