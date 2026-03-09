@@ -1,0 +1,660 @@
+[
+    {
+        "id": "7b9ed63e.2138f8",
+        "type": "tab",
+        "label": "Basic_Flow",
+        "disabled": false,
+        "info": "# Basic flow to start with STM32CubeMonitor."
+    },
+    {
+        "id": "1ebbb430.dac7dc",
+        "type": "ui_chartst",
+        "z": "7b9ed63e.2138f8",
+        "group": "f9c34dde.1e2f4",
+        "name": "myChart",
+        "order": 4,
+        "width": 15,
+        "height": 9,
+        "chartType": "line",
+        "curveType": "linear",
+        "duration": "10",
+        "ymin": "",
+        "ymax": "",
+        "x": 560,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6013fb0b.5b7504",
+        "type": "acquisition out",
+        "z": "7b9ed63e.2138f8",
+        "name": "myProbe_Out",
+        "probeconfig": "c96eb232a0a1949b",
+        "x": 520,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4a573fb0.4bc99",
+        "type": "acquisition in",
+        "z": "7b9ed63e.2138f8",
+        "name": "myProbe_In",
+        "probeconfig": "c96eb232a0a1949b",
+        "x": 110,
+        "y": 280,
+        "wires": [
+            [
+                "a7c3e070.5a6c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d59587ff.cd1748",
+        "type": "variables",
+        "z": "7b9ed63e.2138f8",
+        "groupname": "myVariables",
+        "accesspoint": 0,
+        "execonfig": "99c7dc5b61d76481",
+        "variablelist": [],
+        "triggerstartmode": "manual",
+        "triggername": "motor_speed",
+        "triggerthreshold": "30000",
+        "frequency": "",
+        "frequencyType": "0",
+        "snapshotheader": "",
+        "mode": "direct",
+        "lastImportedTime": 1772139470251,
+        "openStatus": true,
+        "x": 310,
+        "y": 120,
+        "wires": [
+            [
+                "6013fb0b.5b7504"
+            ],
+            [
+                "f14d0398.f1861"
+            ]
+        ]
+    },
+    {
+        "id": "fc00295e.79ada8",
+        "type": "ui_button",
+        "z": "7b9ed63e.2138f8",
+        "name": "",
+        "group": "f9c34dde.1e2f4",
+        "order": 3,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "label": "Clear Graphs",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "clear",
+        "x": 770,
+        "y": 200,
+        "wires": [
+            [
+                "1ebbb430.dac7dc"
+            ]
+        ]
+    },
+    {
+        "id": "5fd51c96.2330e4",
+        "type": "ui_button",
+        "z": "7b9ed63e.2138f8",
+        "name": "",
+        "group": "f9c34dde.1e2f4",
+        "order": 1,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "label": "START Acquisition",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "start",
+        "topicType": "str",
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "d59587ff.cd1748"
+            ]
+        ]
+    },
+    {
+        "id": "52eadfe3.2c8cc",
+        "type": "ui_button",
+        "z": "7b9ed63e.2138f8",
+        "name": "",
+        "group": "f9c34dde.1e2f4",
+        "order": 2,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "label": "STOP Acquisition",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "stop",
+        "topicType": "str",
+        "x": 90,
+        "y": 160,
+        "wires": [
+            [
+                "d59587ff.cd1748"
+            ]
+        ]
+    },
+    {
+        "id": "a7c3e070.5a6c",
+        "type": "processing",
+        "z": "7b9ed63e.2138f8",
+        "groupname": "myVariables",
+        "groupid": "d59587ff.cd1748",
+        "expressions": [],
+        "statistics": [],
+        "logmode": "no",
+        "logformat": "stcm",
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "1ebbb430.dac7dc",
+                "af4dde3418504532",
+                "4ab5360dfbfa9fab"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f14d0398.f1861",
+        "type": "ui_toast",
+        "z": "7b9ed63e.2138f8",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 510,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "af4dde3418504532",
+        "type": "function",
+        "z": "7b9ed63e.2138f8",
+        "name": "function 2",
+        "func": "// สร้างพื้นที่เก็บข้อมูลชั่วคราว (Buffer) เพื่อรอข้อมูลให้ครบ\nvar buffer = context.get('dataBuffer') || {};\n\nvar varName = msg.payload.variablename;\nvar dataArray = msg.payload.variabledata;\n\n// เก็บชุดข้อมูลที่เข้ามาลงใน Buffer ตามชื่อตัวแปร\nbuffer[varName] = dataArray;\ncontext.set('dataBuffer', buffer);\n\n// ตรวจสอบว่าได้รับข้อมูลครบทั้ง 3 ตัวแปรหรือยัง?\nif (buffer['t'] && buffer['v_in'] && buffer['motor_speed']) {\n    var messages = [];\n    \n    // หาจำนวนข้อมูลที่สั้นที่สุดเพื่อป้องกัน Error กรณีบอร์ดส่งข้อมูลมาไม่เท่ากัน\n    var dataLength = Math.min(\n        buffer['t'].length, \n        buffer['v_in'].length, \n        buffer['motor_speed'].length\n    );\n\n    // วนลูปจับคู่ข้อมูลให้อยู่บรรทัดเดียวกัน\n    for (var i = 0; i < dataLength; i++) {\n        messages.push({\n            payload: {\n                // ดึงค่า .y ซึ่งเป็นค่าของตัวแปรนั้นๆ ณ เวลานั้น\n                \"t\": buffer['t'][i].y,\n                \"v_in\": buffer['v_in'][i].y,\n                \"motor_speed\": buffer['motor_speed'][i].y\n            }\n        });\n    }\n    \n    // เมื่อจัดกลุ่มเสร็จแล้ว ล้าง Buffer เพื่อรอรับข้อมูลชุดถัดไป\n    context.set('dataBuffer', {});\n    \n    // ส่งมอบข้อมูลที่เรียงสวยงามแล้วไปให้ Node CSV\n    return [messages];\n}\n\n// ถ้าข้อมูลยังมาไม่ครบ 3 ตัว ให้หยุดการทำงาน Node นี้ไว้ก่อน (ไม่ส่งอะไรออกไป)\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 460,
+        "wires": [
+            [
+                "82d3eb9f8eeb353b"
+            ]
+        ]
+    },
+    {
+        "id": "82d3eb9f8eeb353b",
+        "type": "csv",
+        "z": "7b9ed63e.2138f8",
+        "name": "",
+        "spec": "rfc",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "t,v_in,motor_speed",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 630,
+        "y": 460,
+        "wires": [
+            [
+                "9d1f45b9d52e15ba"
+            ]
+        ]
+    },
+    {
+        "id": "9d1f45b9d52e15ba",
+        "type": "file",
+        "z": "7b9ed63e.2138f8",
+        "name": "",
+        "filename": "C:\\Users\\nitic\\Documents\\GitHub\\FRA233_Lab2_Control_System_Designing\\Control Design for DC motor in STM32\\CSV\\T_ramp.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1190,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ab5360dfbfa9fab",
+        "type": "debug",
+        "z": "7b9ed63e.2138f8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "f9c34dde.1e2f4",
+        "type": "ui_group",
+        "name": "Chart",
+        "tab": "17d09b07.741a55",
+        "order": 1,
+        "disp": true,
+        "width": 15,
+        "collapse": false
+    },
+    {
+        "id": "c96eb232a0a1949b",
+        "type": "probe",
+        "probeid": "0037002F3032511737333436",
+        "probename": "ST-Link v3 0037002F3032511737333436",
+        "protocol": "SWD",
+        "frequency": "24000 kHz",
+        "probeproperty": "{\"SWD\":[\"24000 kHz\",\"8000 kHz\",\"3300 kHz\",\"1000 kHz\",\"200 kHz\",\"50 kHz\",\"5 kHz\"],\"JTAG\":[\"21333 kHz\",\"16000 kHz\",\"12000 kHz\",\"8000 kHz\",\"1777 kHz\",\"750 kHz\"]}",
+        "probeversion": "ST Link firmware version V3.J16",
+        "connectionType": "p2p",
+        "nickname": ""
+    },
+    {
+        "id": "99c7dc5b61d76481",
+        "type": "exe-config",
+        "name": "Motor",
+        "exefile": "C:\\Users\\nitic\\Documents\\GitHub\\FRA233_Lab2_Control_System_Designing\\Control Design for DC motor in STM32\\Debug\\Hardware_in_loop.elf",
+        "exefolder": "C:\\Users\\nitic\\Documents\\GitHub\\FRA233_Lab2_Control_System_Designing\\Control Design for DC motor in STM32\\Debug\\",
+        "exevariablelist": [
+            {
+                "address": "0x08002da8",
+                "name": "AHBPrescTable[0]",
+                "type": 1
+            },
+            {
+                "address": "0x08002db2",
+                "name": "AHBPrescTable[10]",
+                "type": 1
+            },
+            {
+                "address": "0x08002db3",
+                "name": "AHBPrescTable[11]",
+                "type": 1
+            },
+            {
+                "address": "0x08002db4",
+                "name": "AHBPrescTable[12]",
+                "type": 1
+            },
+            {
+                "address": "0x08002db5",
+                "name": "AHBPrescTable[13]",
+                "type": 1
+            },
+            {
+                "address": "0x08002db6",
+                "name": "AHBPrescTable[14]",
+                "type": 1
+            },
+            {
+                "address": "0x08002db7",
+                "name": "AHBPrescTable[15]",
+                "type": 1
+            },
+            {
+                "address": "0x08002da9",
+                "name": "AHBPrescTable[1]",
+                "type": 1
+            },
+            {
+                "address": "0x08002daa",
+                "name": "AHBPrescTable[2]",
+                "type": 1
+            },
+            {
+                "address": "0x08002dab",
+                "name": "AHBPrescTable[3]",
+                "type": 1
+            },
+            {
+                "address": "0x08002dac",
+                "name": "AHBPrescTable[4]",
+                "type": 1
+            },
+            {
+                "address": "0x08002dad",
+                "name": "AHBPrescTable[5]",
+                "type": 1
+            },
+            {
+                "address": "0x08002dae",
+                "name": "AHBPrescTable[6]",
+                "type": 1
+            },
+            {
+                "address": "0x08002daf",
+                "name": "AHBPrescTable[7]",
+                "type": 1
+            },
+            {
+                "address": "0x08002db0",
+                "name": "AHBPrescTable[8]",
+                "type": 1
+            },
+            {
+                "address": "0x08002db1",
+                "name": "AHBPrescTable[9]",
+                "type": 1
+            },
+            {
+                "address": "0x2000002c",
+                "name": "count",
+                "type": 9
+            },
+            {
+                "address": "0x20000088",
+                "name": "htim2.Channel",
+                "type": 2
+            },
+            {
+                "address": "0x200000b0",
+                "name": "htim2.ChannelNState[0]",
+                "type": 2
+            },
+            {
+                "address": "0x200000b1",
+                "name": "htim2.ChannelNState[1]",
+                "type": 2
+            },
+            {
+                "address": "0x200000b2",
+                "name": "htim2.ChannelNState[2]",
+                "type": 2
+            },
+            {
+                "address": "0x200000b3",
+                "name": "htim2.ChannelNState[3]",
+                "type": 2
+            },
+            {
+                "address": "0x200000aa",
+                "name": "htim2.ChannelState[0]",
+                "type": 2
+            },
+            {
+                "address": "0x200000ab",
+                "name": "htim2.ChannelState[1]",
+                "type": 2
+            },
+            {
+                "address": "0x200000ac",
+                "name": "htim2.ChannelState[2]",
+                "type": 2
+            },
+            {
+                "address": "0x200000ad",
+                "name": "htim2.ChannelState[3]",
+                "type": 2
+            },
+            {
+                "address": "0x200000ae",
+                "name": "htim2.ChannelState[4]",
+                "type": 2
+            },
+            {
+                "address": "0x200000af",
+                "name": "htim2.ChannelState[5]",
+                "type": 2
+            },
+            {
+                "address": "0x200000b4",
+                "name": "htim2.DMABurstState",
+                "type": 2
+            },
+            {
+                "address": "0x2000008c",
+                "name": "htim2.hdma[0]",
+                "type": 5
+            },
+            {
+                "address": "0x20000090",
+                "name": "htim2.hdma[1]",
+                "type": 5
+            },
+            {
+                "address": "0x20000094",
+                "name": "htim2.hdma[2]",
+                "type": 5
+            },
+            {
+                "address": "0x20000098",
+                "name": "htim2.hdma[3]",
+                "type": 5
+            },
+            {
+                "address": "0x2000009c",
+                "name": "htim2.hdma[4]",
+                "type": 5
+            },
+            {
+                "address": "0x200000a0",
+                "name": "htim2.hdma[5]",
+                "type": 5
+            },
+            {
+                "address": "0x200000a4",
+                "name": "htim2.hdma[6]",
+                "type": 5
+            },
+            {
+                "address": "0x20000084",
+                "name": "htim2.Init.AutoReloadPreload",
+                "type": 5
+            },
+            {
+                "address": "0x2000007c",
+                "name": "htim2.Init.ClockDivision",
+                "type": 5
+            },
+            {
+                "address": "0x20000074",
+                "name": "htim2.Init.CounterMode",
+                "type": 5
+            },
+            {
+                "address": "0x20000078",
+                "name": "htim2.Init.Period",
+                "type": 5
+            },
+            {
+                "address": "0x20000070",
+                "name": "htim2.Init.Prescaler",
+                "type": 5
+            },
+            {
+                "address": "0x20000080",
+                "name": "htim2.Init.RepetitionCounter",
+                "type": 5
+            },
+            {
+                "address": "0x2000006c",
+                "name": "htim2.Instance",
+                "type": 5
+            },
+            {
+                "address": "0x200000a8",
+                "name": "htim2.Lock",
+                "type": 2
+            },
+            {
+                "address": "0x200000a9",
+                "name": "htim2.State",
+                "type": 2
+            },
+            {
+                "address": "0x20000028",
+                "name": "motor_speed",
+                "type": 9,
+                "checked": true
+            },
+            {
+                "address": "0x2000004c",
+                "name": "motorModel.bwd_cv0",
+                "type": 9
+            },
+            {
+                "address": "0x20000044",
+                "name": "motorModel.bwd_cw1",
+                "type": 9
+            },
+            {
+                "address": "0x20000048",
+                "name": "motorModel.bwd_cw2",
+                "type": 9
+            },
+            {
+                "address": "0x20000040",
+                "name": "motorModel.fwd_cv2",
+                "type": 9
+            },
+            {
+                "address": "0x20000038",
+                "name": "motorModel.fwd_cw1",
+                "type": 9
+            },
+            {
+                "address": "0x2000003c",
+                "name": "motorModel.fwd_cw2",
+                "type": 9
+            },
+            {
+                "address": "0x20000058",
+                "name": "motorModel.tus_cv",
+                "type": 9
+            },
+            {
+                "address": "0x20000050",
+                "name": "motorModel.tus_cw1",
+                "type": 9
+            },
+            {
+                "address": "0x20000054",
+                "name": "motorModel.tus_cw2",
+                "type": 9
+            },
+            {
+                "address": "0x20000064",
+                "name": "motorModel.v1",
+                "type": 9
+            },
+            {
+                "address": "0x20000068",
+                "name": "motorModel.v2",
+                "type": 9
+            },
+            {
+                "address": "0x2000005c",
+                "name": "motorModel.w1",
+                "type": 9
+            },
+            {
+                "address": "0x20000060",
+                "name": "motorModel.w2",
+                "type": 9
+            },
+            {
+                "address": "0x20000000",
+                "name": "SystemCoreClock",
+                "type": 5
+            },
+            {
+                "address": "0x20000030",
+                "name": "t",
+                "type": 9,
+                "checked": true
+            },
+            {
+                "address": "0x200000b8",
+                "name": "uwTick",
+                "type": 5
+            },
+            {
+                "address": "0x20000008",
+                "name": "uwTickFreq",
+                "type": 5
+            },
+            {
+                "address": "0x20000004",
+                "name": "uwTickPrio",
+                "type": 5
+            },
+            {
+                "address": "0x20000034",
+                "name": "v_in",
+                "type": 9,
+                "checked": true
+            }
+        ],
+        "expand": true,
+        "filename": "Hardware_in_loop.elf",
+        "exeModifiedTime": 1772139396926,
+        "configLastUpdate": 1772139469925
+    },
+    {
+        "id": "17d09b07.741a55",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "226dd73eff81e245",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@stm32/node-red-contrib-stm32cubemonitor": "2.5.0",
+            "node-red-dashboard": "3.6.5"
+        }
+    }
+]
