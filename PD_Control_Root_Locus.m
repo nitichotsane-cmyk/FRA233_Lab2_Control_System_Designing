@@ -6,7 +6,7 @@ Gp = tf([kt], ...
     0])
 p_Gp = pole(Gp)
 Z_Gp = zero(Gp)
-rlocus(Gp)
+% rlocus(Gp)
 
 %requirment
 PO = 5;
@@ -39,3 +39,6 @@ Gpd = Kc*tf([1 zPD],1)
 
 zPD = 1.5
 Gpd = Kc*tf([1 zPD],1)
+% Calculate the closed-loop transfer function
+Gcl = feedback(Gpd, Gpd)
+rlocus(Gcl)

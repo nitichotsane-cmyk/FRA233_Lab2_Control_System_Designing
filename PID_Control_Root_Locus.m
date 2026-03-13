@@ -51,6 +51,6 @@ Gpd = Kc*tf([1,ZPD],1)
 
 Gpi = tf([1 0.01],[1 0])
 
-Gpid = Gpd*Gpi
+Gpid = feedback(Gpd,Gpi)
 
-% rlocus(Gpid*Gp)
+rlocus(Gpid*Gp)
